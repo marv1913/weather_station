@@ -1,0 +1,10 @@
+version: "3"
+services:
+  weather_data_manager:
+      image: python
+      working_dir: /usr/src/app
+      privileged: true
+      volumes:
+        - ./:/usr/src/app
+        - /etc/localtime:/etc/localtime:ro
+      command: bash -c "python3 -m pip install -r requirements.txt && python3 main.py"

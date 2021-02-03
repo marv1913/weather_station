@@ -1,17 +1,14 @@
-import datetime
-from datetime import time
+import logging
 
-from flask import jsonify
-from sqlalchemy import desc
-
-from app import db, TemperatureModel
+import variables
+from data_inserter import DataInserter
+from neatmo_api import NetatmoApi
 
 if __name__ == '__main__':
-    db.create_all()
-    temp_model = TemperatureModel('20', datetime.datetime.now())
+    logging.basicConfig(level=logging.DEBUG)
+    netatmo_api = NetatmoApi(variables.WEATHER_STATION_MAC, variables.OUTSIDE_MODULE_MAC, variables.RAIN_MODULE_MAC,
+                             variables.NETATMO_USERNAME, variables.NETATMO_PASSWORD, variables.NETATMO_CLIENT_ID,
+                             variables.NETATMO_CLIENT_SECRET)
+    data_inserter = DataInserter(netatmo_api)
 
-    db.session.add(temp_model)
-    db.session.commit()
-
-    temperatures = TemperatureModel.query.order_by(desc(TemperatureModel.timestamp)).limit(2).all()
-
+    data_inserter.start_inserting_data()
