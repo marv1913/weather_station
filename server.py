@@ -1,22 +1,26 @@
-from flask import request, Flask
+from flask import request
 from sqlalchemy import desc
 
-from data_inserter import WeatherDataModel, db
+from data_inserter import WeatherDataModel, db, app, RainDataModel
 
-
+QUERY_LIMIT = 144
 
 
 @app.route('/weather', methods=['GET', 'POST'])
 def handle_temperature():
     if request.method == 'GET':
-        weather_data = WeatherDataModel.query.order_by(desc(WeatherDataModel.timestamp)).limit(2).all()
-        results = [
-            {data.timestamp:
+        weather_data = WeatherDataModel.query.order_by(desc(WeatherDataModel.timestamp)).limit(QUERY_LIMIT).all()
+        results = {'temperatures': [
+            {str(data.timestamp):
                  {"temperature": str(data.temperature),
                   "humidity": str(data.humidity)
                   }
-             } for data in weather_data]
-        return {'temperatures': results}
+             } for data in weather_data]}
+        rain_data = RainDataModel.query.order_by(desc(RainDataModel.timestamp)).limit(QUERY_LIMIT).all()
+        rainfall = [{str(data.timestamp): {'sum_1': str(data.rainfall), 'sum_24': str(data.rainfall_day)}} for data in
+                    rain_data]
+        results['rain'] = rainfall
+        return results
     elif request.method == 'POST':
         data = request.get_json()
         new_temperature = WeatherDataModel(data['temperature'], data['timestamp'])
@@ -26,5 +30,12 @@ def handle_temperature():
         return {"message": "new temperature added"}
 
 
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    return response
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

@@ -12,3 +12,4 @@ if __name__ == '__main__':
     data_inserter = DataInserter(netatmo_api)
 
     data_inserter.start_inserting_data()
+

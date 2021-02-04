@@ -5,7 +5,6 @@ import time
 from flask import Flask
 from sqlalchemy.exc import IntegrityError
 
-import local_measurement
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -39,9 +38,11 @@ class RainDataModel(db.Model):
 
     timestamp = db.Column(db.TIMESTAMP, primary_key=True)
     rainfall = db.Column(db.DECIMAL)
+    rainfall_day = db.Column(db.DECIMAL)
 
-    def __init__(self, rainfall, timestamp):
+    def __init__(self, rainfall, rainfall_day, timestamp):
         self.rainfall = rainfall
+        self.rainfall_day = rainfall_day
         self.timestamp = timestamp
 
 
@@ -52,6 +53,7 @@ class DataInserter:
         connect_to_db()
 
     def start_inserting_data(self):
+        import local_measurement
         while True:
             current_time = datetime.datetime.now()
             temperature = local_measurement.get_current_temperature()
@@ -61,13 +63,16 @@ class DataInserter:
             db.session.commit()
 
             try:
-                rainfall = self.netatmo_api_obj.get_rain()
+                rainfall = self.netatmo_api_obj.get_rain_last_hour()
+                rainfall_day = self.netatmo_api_obj.get_rain_last_day()
+
                 timestamp_rain = datetime.datetime.now().strftime('%Y-%m-%d %H') + ':00:00'
-                db.session.add(RainDataModel(rainfall, timestamp_rain))
+                db.session.add(RainDataModel(rainfall, rainfall_day, timestamp_rain))
                 db.session.commit()
-                logging.info(f'{timestamp_rain}: inserting {rainfall}mm')
+                logging.info(
+                    f'{timestamp_rain}: inserting {rainfall}mm for last hour and {rainfall_day}mm for last 24 hours')
             except IntegrityError:
-                pass
+                db.session.rollback()
 
             time.sleep(600)  # insert data every 5 minutes
 
