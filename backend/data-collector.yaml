@@ -9,4 +9,4 @@ services:
       volumes:
         - ./src:/usr/src/app
         - /etc/localtime:/etc/localtime:ro
-      command: bash -c "python3 -m pip install -r requirements.txt && python3 main.py"
+      command: bash -c "python3 -m pip install -r requirements.txt && python3 src/main.py"
