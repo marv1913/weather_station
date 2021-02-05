@@ -1,6 +1,6 @@
 from flask import request
 
-from data_collector.data_inserter import WeatherDataModel, db, RainDataModel
+from model.db import WeatherDataModel, db, RainDataModel
 from model.db import app
 QUERY_LIMIT = 144
 
