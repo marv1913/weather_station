@@ -1,0 +1,33 @@
+version: "3"
+services:
+  weather_rest:
+      image: python
+      working_dir: /usr/src/app
+      env_file:
+        - rest_server_settings.env
+      ports:
+        - ${SERVER_IP}:5000:5000
+      volumes:
+        - ./backend:/usr/src/app
+        - /etc/localtime:/etc/localtime:ro
+      command: bash -c "python3 -m pip install -r requirements.txt && python3 src/server.py"
+    webserver:
+      image: node
+      working_dir: /app
+      ports:
+        - ${SERVER_IP}:8080:3000
+      volumes:
+        - ./weather_visualizer:/app
+      command: npm start
+      database:
+        image: postgres
+        restart: always
+        environment:
+          POSTGRES_USER: weather
+          POSTGRES_PASSWORD: weatherStation
+          POSTGRES_DB: weather_station
+        ports:
+          - ${SERVER_IP}::5433:5432
+        volumes:
+          - database_data:/var/lib/postgresql/data
+          # - ./data.sql:/docker-entrypoint-initdb.d/data.sql
