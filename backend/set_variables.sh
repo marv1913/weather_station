@@ -1,0 +1,12 @@
+export SERVER_IP=127.0.0.1
+export DB_USERNAME="weather"
+export DB_PASSWORD="weatherStation"
+export DB_HOST="7630e86.online-server.cloud"
+export DB_PORT=5433
+export WEATHER_STATION_MAC="70:ee:50:64:02:ee"
+export OUTSIDE_MODULE_MAC="02:00:00:64:35:4a"
+export RAIN_MODULE_MAC="05:00:00:07:cf:74"
+export NETATMO_USERNAME="marvin.rausch@live.de"
+export NETATMO_PASSWORD="Maramasummt1913?"
+export NETATMO_CLIENT_ID="601a864e657b40286b43482b"
+export NETATMO_CLIENT_SECRET="RyHEBatZn2RuKH07SCZrIlA4ql"
