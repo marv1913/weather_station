@@ -3,6 +3,8 @@ services:
   weather_data_manager:
       image: python
       working_dir: /usr/src/app
+      env_file:
+        - rest_server_settings.env
       privileged: true
       volumes:
         - ./:/usr/src/app

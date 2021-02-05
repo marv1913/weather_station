@@ -9,14 +9,14 @@ QUERY_LIMIT = 144
 @app.route('/weather', methods=['GET', 'POST'])
 def handle_temperature():
     if request.method == 'GET':
-        weather_data = WeatherDataModel.query.order_by(desc(WeatherDataModel.timestamp)).limit(QUERY_LIMIT).all()
+        weather_data = WeatherDataModel.query.order_by(WeatherDataModel.timestamp).limit(QUERY_LIMIT).all()
         results = {'temperatures': [
             {str(data.timestamp):
                  {"temperature": str(data.temperature),
                   "humidity": str(data.humidity)
                   }
              } for data in weather_data]}
-        rain_data = RainDataModel.query.order_by(desc(RainDataModel.timestamp)).limit(QUERY_LIMIT).all()
+        rain_data = RainDataModel.query.order_by(RainDataModel.timestamp).limit(QUERY_LIMIT).all()
         rainfall = [{str(data.timestamp): {'sum_1': str(data.rainfall), 'sum_24': str(data.rainfall_day)}} for data in
                     rain_data]
         results['rain'] = rainfall
