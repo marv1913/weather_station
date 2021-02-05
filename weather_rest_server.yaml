@@ -4,7 +4,7 @@ services:
       image: python
       working_dir: /usr/src/app
       env_file:
-        - rest_server_settings.env
+        - .env
       ports:
         - ${SERVER_IP}:5000:5000
       volumes:
@@ -31,3 +31,7 @@ services:
       volumes:
         - database_data:/var/lib/postgresql/data
         # - ./data.sql:/docker-entrypoint-initdb.d/data.sql
+
+volumes:
+  database_data:
+    driver: local
