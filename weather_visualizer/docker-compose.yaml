@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webserver:
+    image: node
+    working_dir: /app
+    ports:
+      - ${SERVER_IP}:8080:3000
+    volumes:
+      - ./:/app
+    command: npm start
