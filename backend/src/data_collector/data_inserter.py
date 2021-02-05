@@ -15,7 +15,7 @@ class DataInserter:
         connect_to_db()
 
     def start_inserting_data(self):
-        import local_measurement
+        from data_collector import local_measurement
         while True:
             try:
                 current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
