@@ -11,7 +11,7 @@ services:
         - ./backend:/usr/src/app
         - /etc/localtime:/etc/localtime:ro
       command: bash -c "python3 -m pip install -r requirements.txt && python3 src/server.py"
-    webserver:
+  webserver:
       image: node
       working_dir: /app
       ports:
@@ -19,7 +19,7 @@ services:
       volumes:
         - ./weather_visualizer:/app
       command: npm start
-    database:
+  database:
       image: postgres
       restart: always
       environment:
