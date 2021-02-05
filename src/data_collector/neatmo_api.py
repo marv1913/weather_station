@@ -3,7 +3,7 @@ import urllib
 
 import requests
 
-import variables
+from src import variables
 
 
 class NetatmoApi:

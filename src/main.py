@@ -1,8 +1,8 @@
 import logging
 
 import variables
-from data_inserter import DataInserter
-from neatmo_api import NetatmoApi
+from data_collector.data_inserter import DataInserter
+from data_collector.neatmo_api import NetatmoApi
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
