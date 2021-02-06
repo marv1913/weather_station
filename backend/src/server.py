@@ -35,6 +35,8 @@ def after_request(response):
     header['Access-Control-Allow-Origin'] = '*'
     return response
 
+# TODO endpoint for esp32 pool temperature measurement
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
