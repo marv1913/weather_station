@@ -22,7 +22,7 @@ class Humidity extends Component {
             datasets.push(this.state.humidity[i][timestamp].humidity)
         }
         return GenerateLineGraph({
-            text: "current humidity: " + this.state.humidity[0][Object.keys(this.state.humidity[0])[0]].humidity + "%",
+            text: "current humidity: " + this.state.humidity[this.state.humidity.length-1][Object.keys(this.state.humidity[this.state.humidity.length-1])[0]].humidity + "%",
             data: datasets,
             labels: newLabels,
             label: "humidity in %"

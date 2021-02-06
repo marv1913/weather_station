@@ -21,7 +21,8 @@ class Temperature extends Component {
             datasets.push(this.state.temperatures[i][timestamp].temperature)
         }
         return GenerateLineGraph({
-            text: "current temperature: " + this.state.temperatures[0][Object.keys(this.state.temperatures[0])[0]].temperature,
+            text: "current temperature: " + this.state.temperatures[this.state.temperatures.length - 1]
+                [Object.keys(this.state.temperatures[this.state.temperatures.length - 1])[0]].temperature,
             data: datasets,
             labels: newLabels,
             label: "temperature in °C"
