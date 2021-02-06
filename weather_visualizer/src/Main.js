@@ -7,6 +7,7 @@ import {
 import Home from "./Home";
 import Rainfall from "./Rainfall";
 import Temperature from "./Temperature";
+import Humidity from "./Humidity";
 
 
 
@@ -20,12 +21,14 @@ class Main extends Component {
                         <li><NavLink exact to="/">Home</NavLink></li>
                         <li><NavLink to="/rain">Rainfall</NavLink></li>
                         <li><NavLink to="/temperature">Temperature</NavLink></li>
+                        <li><NavLink to="/humidity">Humidity</NavLink></li>
                         {/*<li><NavLink to="/contact">Contact</NavLink></li>*/}
                     </ul>
                     <div className="content">
                         <Route exact path="/" component={Home}/>
                         <Route path="/rain" component={Rainfall}/>
                         <Route path="/temperature" component={Temperature}/>
+                        <Route path="/humidity" component={Humidity}/>
                         {/*<Route path="/contact" component={Contact}/>*/}
                     </div>
                 </div>

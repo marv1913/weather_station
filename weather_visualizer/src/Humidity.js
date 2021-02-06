@@ -1,30 +1,31 @@
 import React, {Component} from "react";
 import {GenerateLineGraph} from "./LineGraph";
 
-class Temperature extends Component {
+class Humidity extends Component {
     constructor(props) {
         super(props);
         this.state = {
             error: null,
             isLoaded: false,
-            temperatures: []
+            humidity: []
         };
     }
 
-    get_current_temp() {
+    fill_graph() {
         let newLabels = []
         let datasets = []
-        for (let i = 0; i < this.state.temperatures.length; i++) {
-            let timestamp = Object.keys(this.state.temperatures[i])[0]
+        let currentHumidity = ""
+        for (let i = 0; i < this.state.humidity.length; i++) {
+            let timestamp = Object.keys(this.state.humidity[i])[0]
             newLabels.push(timestamp)
 
-            datasets.push(this.state.temperatures[i][timestamp].temperature)
+            datasets.push(this.state.humidity[i][timestamp].humidity)
         }
         return GenerateLineGraph({
-            text: "current temperature: " + this.state.temperatures[0][Object.keys(this.state.temperatures[0])[0]].temperature,
+            text: "current humidity: " + this.state.humidity[0][Object.keys(this.state.humidity[0])[0]].humidity + "%",
             data: datasets,
             labels: newLabels,
-            label: "temperature in °C"
+            label: "humidity in %"
         })
     }
 
@@ -35,7 +36,7 @@ class Temperature extends Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        temperatures: result.temperatures
+                        humidity: result.temperatures
                     });
                 },
                 (error) => {
@@ -55,11 +56,11 @@ class Temperature extends Component {
             return <div>Loading...</div>;
         } else {
             return (
-                this.get_current_temp()
+                this.fill_graph()
             );
         }
     }
 }
 
 
-export default Temperature;
+export default Humidity;
