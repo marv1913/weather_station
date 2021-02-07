@@ -38,3 +38,14 @@ class RainDataModel(db.Model):
         self.rainfall = rainfall
         self.rainfall_day = rainfall_day
         self.timestamp = timestamp
+
+
+class PoolTemperatureModel(db.Model):
+    __tablename__ = 'pool_temperature'
+
+    timestamp = db.Column(db.TIMESTAMP, primary_key=True)
+    temperature = db.Column(db.DECIMAL)
+
+    def __init__(self, temperature, timestamp):
+        self.temperature = temperature
+        self.timestamp = timestamp

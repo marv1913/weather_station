@@ -1,9 +1,11 @@
 from flask import request
+from flask.json import jsonify
 
-from model.db import WeatherDataModel, db, RainDataModel
+from model.db import WeatherDataModel, db, RainDataModel, PoolTemperatureModel
 from model.db import app
-QUERY_LIMIT = 144
 
+QUERY_LIMIT = 144
+db.create_all()
 
 @app.route('/weather', methods=['GET', 'POST'])
 def handle_temperature():
@@ -29,13 +31,31 @@ def handle_temperature():
         return {"message": "new temperature added"}
 
 
+@app.route('/pool_temperature', methods=['GET', 'POST'])
+def handle_pool_temperature():
+    if request.method == 'GET':
+        weather_data = PoolTemperatureModel.query.order_by(PoolTemperatureModel.timestamp).limit(QUERY_LIMIT).all()
+        results = [
+            {"timestamp": str(data.timestamp),
+             "temperature": str(data.temperature)
+             }
+            for data in weather_data]
+        return jsonify(results)
+    elif request.method == 'POST':
+        data = request.get_json()
+        new_temperature = PoolTemperatureModel(data['temperature'], data['timestamp'])
+
+        db.session.add(new_temperature)
+        db.session.commit()
+        return jsonify({"message": "new temperature added"})
+
+
 @app.after_request
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
     return response
 
-# TODO endpoint for esp32 pool temperature measurement
 
 
 if __name__ == '__main__':

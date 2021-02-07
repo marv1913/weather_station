@@ -39,13 +39,19 @@ class NetatmoApi:
         data_as_dict = self.get_weather_station_data()
         for module in data_as_dict['body']['devices'][0]['modules']:
             if module['_id'] == self.rain_module_mac:
-                return module['dashboard_data']['sum_rain_24']
+                try:
+                    return module['dashboard_data']['sum_rain_24']
+                except KeyError:
+                    return 0
 
     def get_rain_last_hour(self):
         data_as_dict = self.get_weather_station_data()
         for module in data_as_dict['body']['devices'][0]['modules']:
             if module['_id'] == self.rain_module_mac:
-                return module['dashboard_data']['sum_rain_1']
+                try:
+                    return module['dashboard_data']['sum_rain_1']
+                except KeyError:
+                    return 0
 
 
 if __name__ == '__main__':
