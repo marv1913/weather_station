@@ -11,9 +11,7 @@ db.create_all()
 def handle_temperature():
     if request.method == 'GET':
         weather_data = WeatherDataModel.query.order_by(WeatherDataModel.timestamp).limit(QUERY_LIMIT).all()
-        results = {'temperatures': [
-            {str(data.timestamp):
-                 {"temperature": str(data.temperature),
+        results = {'temperatures': [{"temperature": str(data.temperature), 'timestamp': str(data.timestamp)}
                   "humidity": str(data.humidity)
                   }
              } for data in weather_data]}
@@ -34,6 +32,7 @@ def handle_temperature():
 @app.route('/pool_temperature', methods=['GET', 'POST'])
 def handle_pool_temperature():
     if request.method == 'GET':
+        # ToDo fix bug with query limit
         weather_data = PoolTemperatureModel.query.order_by(PoolTemperatureModel.timestamp).limit(QUERY_LIMIT).all()
         results = [
             {"timestamp": str(data.timestamp),
