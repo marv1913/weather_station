@@ -8,7 +8,7 @@ import Home from "./Home";
 import Rainfall from "./Rainfall";
 import Temperature from "./Temperature";
 import Humidity from "./Humidity";
-
+import PoolTemperature from "./PoolTemperature";
 
 
 class Main extends Component {
@@ -22,6 +22,7 @@ class Main extends Component {
                         <li><NavLink to="/rain">Rainfall</NavLink></li>
                         <li><NavLink to="/temperature">Temperature</NavLink></li>
                         <li><NavLink to="/humidity">Humidity</NavLink></li>
+                        <li><NavLink to="/pool">Pool temperature</NavLink></li>
                         {/*<li><NavLink to="/contact">Contact</NavLink></li>*/}
                     </ul>
                     <div className="content">
@@ -29,6 +30,7 @@ class Main extends Component {
                         <Route path="/rain" component={Rainfall}/>
                         <Route path="/temperature" component={Temperature}/>
                         <Route path="/humidity" component={Humidity}/>
+                        <Route path="/pool" component={PoolTemperature}/>
                         {/*<Route path="/contact" component={Contact}/>*/}
                     </div>
                 </div>

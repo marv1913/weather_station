@@ -38,4 +38,14 @@ ul.header li a {
     background-color: silver;
 }
 
+ul.viewButtonList{
+    list-style-type: none;
+}
+ul.viewButtonList li{
+    display: inline;
+    padding: 10px;
+}
 
+button.viewButton{
+    height: 30px;
+}
