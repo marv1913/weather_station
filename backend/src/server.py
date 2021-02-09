@@ -11,6 +11,8 @@ QUERY_LIMIT_RAIN = 24
 db.create_all()
 
 
+# TODO remove more than 2 decimal places of temperature values
+
 @app.route('/weather', methods=['GET', 'POST'])
 def handle_temperature():
     if request.method == 'GET':
@@ -32,14 +34,15 @@ def handle_temperature():
 @app.route('/pool_temperature', methods=['GET', 'POST'])
 def handle_pool_temperature():
     if request.method == 'GET':
-        weather_data = PoolTemperatureModel.query.order_by(desc(PoolTemperatureModel.timestamp)).limit(QUERY_LIMIT).all()
+        weather_data = PoolTemperatureModel.query.order_by(desc(PoolTemperatureModel.timestamp)).limit(
+            QUERY_LIMIT).all()
         results = [
             {"timestamp": str(data.timestamp),
              "temperature": str(data.temperature)
              }
             for data in weather_data]
         results = sort_list_of_dicts_by_timestamp(results)
-        return jsonify(results)
+        return jsonify({"temperatures": results})
     elif request.method == 'POST':
         data = request.get_json()
         new_temperature = PoolTemperatureModel(data['temperature'], data['timestamp'])
