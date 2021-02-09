@@ -39,7 +39,7 @@ def handle_pool_temperature():
              }
             for data in weather_data]
         results = sort_list_of_dicts_by_timestamp(results)
-        return jsonify(results)
+        return jsonify({"temperatures": results})
     elif request.method == 'POST':
         data = request.get_json()
         new_temperature = PoolTemperatureModel(data['temperature'], data['timestamp'])
