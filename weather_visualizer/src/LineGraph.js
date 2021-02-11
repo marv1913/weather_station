@@ -6,7 +6,6 @@ let data = {
     labels: [],
     datasets: [
         {
-
             data: [],
             fill: false,
             backgroundColor: 'rgb(255, 99, 132)',
@@ -16,6 +15,8 @@ let data = {
 }
 
 let options = {
+    responsive: true,
+    maintainAspectRatio: false,
     title: {
         display: true,
         text: "",
@@ -26,10 +27,21 @@ let options = {
             {
                 ticks: {
                     beginAtZero: true,
-                },
+                }
+            }
+        ],
+        xAxes: [
+            {
+                offset: true,
+                ticks: {
+                    beginAtZero: true,
+                    autoSkip: true,
+                    maxTicksLimit: 25,
+
+                }
             },
         ],
-    },
+    }
 }
 
 function LimitShownValues(props) {
@@ -54,7 +66,6 @@ export function GenerateLineGraph(props) {
     return <Line
         data={data}
         options={options}
-        height={80}
     />
 }
 

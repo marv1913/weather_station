@@ -2,7 +2,7 @@ body, html {
     background-color: dimgrey;
     padding: 20px;
     margin: 0;
-    min-width: 850px;
+    /*min-width: 2000px;*/
 }
 h1, h2, p, ul, li {
     font-family: sans-serif;
@@ -48,4 +48,8 @@ ul.viewButtonList li{
 
 button.viewButton{
     height: 30px;
+}
+
+.canvas-container{
+    height: 60vh;
 }

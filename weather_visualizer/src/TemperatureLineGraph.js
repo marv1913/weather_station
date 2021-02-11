@@ -73,6 +73,7 @@ class TemperatureLineGraph extends Component {
                     <li><Button className="viewButton" variant="contained" color="primary"
                                 onClick={() => this.SetDuration(3)}>3 hours</Button></li>
                 </ul>
+                <article className="canvas-container">
                 {(
                     GenerateLineGraph({
                         text: this.state.data.current_value,
@@ -82,6 +83,7 @@ class TemperatureLineGraph extends Component {
                         count: this.state.valueCount
                     })
                 )}
+                </article>
             </div>
         }
     }
