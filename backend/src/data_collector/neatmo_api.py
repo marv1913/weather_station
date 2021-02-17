@@ -1,5 +1,6 @@
 import json
 import urllib
+from json.decoder import JSONDecodeError
 
 import requests
 
@@ -21,7 +22,10 @@ class NetatmoApi:
         r = requests.get(
             f'https://api.netatmo.com/api/getstationsdata?{urllib.parse.urlencode({"device_id": self.mac_address})}'
             f'&get_favorites=false', headers={'Authorization': f'Bearer {self.get_authorization()}'})
-        return json.loads(r.text)
+        try:
+            return json.loads(r.text)
+        except JSONDecodeError:
+            return {}
 
     def get_authorization(self):
         r = requests.post(f'https://api.netatmo.com/oauth2/token',

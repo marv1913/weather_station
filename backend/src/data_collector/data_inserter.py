@@ -33,7 +33,8 @@ class DataInserter:
                         db.session.commit()
                         logging.info(
                             f'{timestamp_rain}: inserting {rainfall}mm for last hour and {rainfall_day}mm for last 24 hours')
-                    except IntegrityError:
+                    except (IntegrityError, ConnectionError) as e:
+                        logging.debug(e)
                         db.session.rollback()
                     close_connection()
 

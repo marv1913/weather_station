@@ -1,3 +1,6 @@
+import json
+from datetime import datetime
+
 from flask import request
 from flask.json import jsonify
 from sqlalchemy import desc
@@ -20,7 +23,7 @@ def handle_temperature():
         temperatures = [{"temperature": str(data.temperature), "timestamp": str(data.timestamp)} for data in
                         weather_data]
         humidity = [{"humidity": str(data.humidity), "timestamp": str(data.timestamp)} for data in weather_data]
-        rain_data = RainDataModel.query.order_by(RainDataModel.timestamp).limit(QUERY_LIMIT_RAIN).all()
+        rain_data = RainDataModel.query.order_by(desc(RainDataModel.timestamp)).limit(QUERY_LIMIT_RAIN).all()
         rainfall = [{'timestamp': str(data.timestamp), 'sum_1': str(data.rainfall), 'sum_24': str(data.rainfall_day)}
                     for data in rain_data]
         humidity = sort_list_of_dicts_by_timestamp(humidity)
@@ -44,8 +47,8 @@ def handle_pool_temperature():
         results = sort_list_of_dicts_by_timestamp(results)
         return jsonify({"temperatures": results})
     elif request.method == 'POST':
-        data = request.get_json()
-        new_temperature = PoolTemperatureModel(data['temperature'], data['timestamp'])
+        data = json.loads(request.data)
+        new_temperature = PoolTemperatureModel(data['temperature'], datetime.now().strftime("%Y-%m-%d %H:%M"))
 
         db.session.add(new_temperature)
         db.session.commit()
