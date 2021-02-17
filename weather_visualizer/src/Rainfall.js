@@ -31,11 +31,10 @@ class Rainfall extends Component {
         data.datasets[0].data = []
         data.labels = []
         for (let i = 0; i < this.state.rain.length; i++) {
-            let timestamp = Object.keys(this.state.rain[i])[0]
-            data.labels.push(timestamp)
-            data.datasets[0].data.push(this.state.rain[i][timestamp].sum_1)
+            data.labels.push(this.state.rain[i].timestamp)
+            data.datasets[0].data.push(this.state.rain[i].sum_1)
         }
-        return this.state.rain[0][Object.keys(this.state.rain[0])[0]].sum_24
+        return this.state.rain[this.state.rain.length - 1].sum_24
     }
 
     componentDidMount() {
@@ -77,6 +76,15 @@ class Rainfall extends Component {
                             legend: {
                                 display: true,
                                 position: 'right'
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true,
+                                        // min: 0,
+                                        // max: 100
+                                    }
+                                }]
                             }
                         }}
                         height={80}
