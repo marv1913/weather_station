@@ -2,6 +2,7 @@ import datetime
 import logging
 import time
 
+import requests
 from sqlalchemy.exc import IntegrityError, OperationalError
 
 from model.db import WeatherDataModel, db, RainDataModel
@@ -32,7 +33,8 @@ class DataInserter:
                         db.session.add(RainDataModel(rainfall, rainfall_day, timestamp_rain))
                         db.session.commit()
                         logging.info(
-                            f'{timestamp_rain}: inserting {rainfall}mm for last hour and {rainfall_day}mm for last 24 hours')
+                            f'{timestamp_rain}: inserting {rainfall}mm for last hour and {rainfall_day}mm for last 24 '
+                            f'hours')
                     except (IntegrityError, ConnectionError) as e:
                         logging.debug(e)
                         db.session.rollback()
@@ -40,6 +42,9 @@ class DataInserter:
 
                 except OperationalError:
                     logging.debug('connection to server closed')
+                    time.sleep(30)
+                except requests.exceptions.RequestException:
+                    logging.debug('no internet connection')
                     time.sleep(30)
             logging.debug("sleep for 10 minutes")
             time.sleep(600)  # insert data every 10 minutes

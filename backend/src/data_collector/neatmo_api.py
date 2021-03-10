@@ -35,9 +35,12 @@ class NetatmoApi:
 
     def get_current_humidity(self):
         data_as_dict = self.get_weather_station_data()
-        for module in data_as_dict['body']['devices'][0]['modules']:
-            if module['_id'] == self.outside_temperature_module_mac_address:
-                return module['dashboard_data']['Humidity']
+        try:
+            for module in data_as_dict['body']['devices'][0]['modules']:
+                if module['_id'] == self.outside_temperature_module_mac_address:
+                    return module['dashboard_data']['Humidity']
+        except KeyError:
+            return 0
 
     def get_rain_last_day(self):
         data_as_dict = self.get_weather_station_data()
@@ -49,13 +52,13 @@ class NetatmoApi:
                     return 0
 
     def get_rain_last_hour(self):
-        data_as_dict = self.get_weather_station_data()
-        for module in data_as_dict['body']['devices'][0]['modules']:
-            if module['_id'] == self.rain_module_mac:
-                try:
+        try:
+            data_as_dict = self.get_weather_station_data()
+            for module in data_as_dict['body']['devices'][0]['modules']:
+                if module['_id'] == self.rain_module_mac:
                     return module['dashboard_data']['sum_rain_1']
-                except KeyError:
-                    return 0
+        except KeyError:
+            return 0
 
 
 if __name__ == '__main__':
