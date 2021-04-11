@@ -18,6 +18,11 @@ The REST server was devoloped by using the python library flask. The server prov
  - endpoint can be used to add new temperature values sending a POST request: e.g. ``{"temperature": "20.5"}
  - send a GET request to this endpoint to get all temperature data from the last 24 hours  
 
+### fine particles data
+
+ - supports http method GET
+ - URI: ``/particulates``
+ - data for particles with a size of 2,5ppm and 10ppm in JSON format
 
 ## Webpage
 The website was developed using react. There are subpages for different types of diagrams. The library react-chart-js is used for visualizing the data from the REST server.
