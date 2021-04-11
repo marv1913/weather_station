@@ -1,4 +1,5 @@
 
+
 # Weather Station
 
 ## REST endpoint
@@ -27,3 +28,5 @@ The website was developed using react. There are subpages for different types of
 
 ![screenshot of diagram for temperature data](https://github.com/marv1913/weather_station/blob/master/screenshots/temperature_data.png)
 	
+### Temperature measurement application for ESP-32
+The program reads temperature data from a ds18b20 temperature sensor every 15 minutes and sends it to the water temperature endpoint of the REST server. After the temperature data were sent to the server the microcontroller goes into deep sleep mode to save energy.
