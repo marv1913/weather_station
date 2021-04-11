@@ -9,6 +9,7 @@ import Rainfall from "./Rainfall";
 import Temperature from "./Temperature";
 import Humidity from "./Humidity";
 import PoolTemperature from "./PoolTemperature";
+import Particulates from "./Particulates";
 
 
 class Main extends Component {
@@ -20,6 +21,7 @@ class Main extends Component {
                     <ul className="header">
                         <li><NavLink exact to="/">Home</NavLink></li>
                         <li><NavLink to="/rain">Rainfall</NavLink></li>
+                        <li><NavLink to="/particulates">Particulates</NavLink></li>
                         <li><NavLink to="/temperature">Temperature</NavLink></li>
                         <li><NavLink to="/humidity">Humidity</NavLink></li>
                         <li><NavLink to="/pool">Pool temperature</NavLink></li>
@@ -28,6 +30,7 @@ class Main extends Component {
                     <div className="content">
                         <Route exact path="/" component={Home}/>
                         <Route path="/rain" component={Rainfall}/>
+                        <Route path="/particulates" component={Particulates}/>
                         <Route path="/temperature" component={Temperature}/>
                         <Route path="/humidity" component={Humidity}/>
                         <Route path="/pool" component={PoolTemperature}/>

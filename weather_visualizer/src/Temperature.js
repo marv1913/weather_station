@@ -12,7 +12,8 @@ class Temperature extends TemperatureLineGraph {
             uri: "weather",
             key: "temperatures",
             key_sub_dict: "temperature",
-            text_current_value: "current temperature: $value$°C"
+            text_current_value: "current temperature: $value$°C",
+            line_description: "temperature in °C"
         };
     }
 }

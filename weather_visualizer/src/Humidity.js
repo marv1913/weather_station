@@ -12,7 +12,8 @@ class Humidity extends TemperatureLineGraph {
             uri: "weather",
             key: "humidity",
             key_sub_dict: "humidity",
-            text_current_value: "current humidity: $value$%"
+            text_current_value: "current humidity: $value$%",
+            line_description: "humidity in %"
         };
     }
 }

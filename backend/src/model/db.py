@@ -23,9 +23,6 @@ class WeatherDataModel(db.Model):
         self.timestamp = timestamp
         self.humidity = humidity
 
-    # def __repr__(self):
-    #     return f"<Car {self.name}>"
-
 
 class RainDataModel(db.Model):
     __tablename__ = 'rain_data'
@@ -48,4 +45,17 @@ class PoolTemperatureModel(db.Model):
 
     def __init__(self, temperature, timestamp):
         self.temperature = temperature
+        self.timestamp = timestamp
+
+
+class ParticulatesModel(db.Model):
+    __tablename__ = 'particulates'
+
+    timestamp = db.Column(db.TIMESTAMP, primary_key=True)
+    pm_25 = db.Column(db.DECIMAL)
+    pm_10 = db.Column(db.DECIMAL)
+
+    def __init__(self, pm_25, pm_10, timestamp):
+        self.pm_25 = pm_25
+        self.pm_10 = pm_10
         self.timestamp = timestamp

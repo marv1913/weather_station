@@ -62,7 +62,7 @@ export function GenerateLineGraph(props) {
     let limitedData = LimitShownValues({count: props.count, data: props.data, labels: props.labels})
     data.datasets[0].data = limitedData.data
     data.labels = limitedData.labels
-    data.datasets[0].label = "text"
+    data.datasets[0].label = props.label
     return <Line
         data={data}
         options={options}
@@ -80,6 +80,5 @@ export function GetTimestampAndValue(props) {
     }
     let value = weather_array[weather_array.length - 1][props.key_sub_dict]
     weather_data.current_value = props.text_current_value.replace("$value$", value)
-    console.log(weather_data)
     return weather_data
 }

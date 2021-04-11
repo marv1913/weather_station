@@ -11,6 +11,24 @@ services:
         - ./backend:/usr/src/app
         - /etc/localtime:/etc/localtime:ro
       command: bash -c "python3 -m pip install -r requirements.txt && python3 src/server.py"
+  weather_data_manager:
+    image: python
+    working_dir: /usr/src/app
+    env_file:
+      - .env
+    privileged: true
+    volumes:
+      - ./backend:/usr/src/app
+      - /etc/localtime:/etc/localtime:ro
+    command: bash -c "python3 -m pip install -r requirements.txt && python3 src/main.py"
+  webserver:
+      image: node
+      working_dir: /app
+      ports:
+        - ${SERVER_IP}:8080:3000
+      volumes:
+        - ./weather_visualizer:/app
+      command: bash -c "npm install chokidar && npm install && npm install && npm start"
   database:
       image: postgres
       restart: always

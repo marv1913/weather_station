@@ -12,7 +12,8 @@ class PoolTemperature extends TemperatureLineGraph {
             uri: "pool_temperature",
             key: "temperatures",
             key_sub_dict: "temperature",
-            text_current_value: "current temperature: $value$°C"
+            text_current_value: "current temperature: $value$°C",
+            line_description: "temperature in °C"
         };
     }
 }

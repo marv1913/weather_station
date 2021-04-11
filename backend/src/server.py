@@ -5,7 +5,7 @@ from flask import request
 from flask.json import jsonify
 from sqlalchemy import desc
 
-from model.db import WeatherDataModel, db, RainDataModel, PoolTemperatureModel
+from model.db import WeatherDataModel, db, RainDataModel, PoolTemperatureModel, ParticulatesModel
 from model.db import app
 
 QUERY_LIMIT = 144
@@ -17,7 +17,7 @@ db.create_all()
 # TODO remove more than 2 decimal places of temperature values
 
 @app.route('/weather', methods=['GET', 'POST'])
-def handle_temperature():
+def handle_weather():
     if request.method == 'GET':
         weather_data = WeatherDataModel.query.order_by(desc(WeatherDataModel.timestamp)).limit(QUERY_LIMIT).all()
         temperatures = [{"temperature": str(data.temperature), "timestamp": str(data.timestamp)} for data in
@@ -53,6 +53,20 @@ def handle_pool_temperature():
         db.session.add(new_temperature)
         db.session.commit()
         return jsonify({"message": "new temperature added"})
+
+
+@app.route('/particulates', methods=['GET'])
+def handle_particulates_data():
+    if request.method == 'GET':
+        particulates_data = ParticulatesModel.query.order_by(desc(ParticulatesModel.timestamp)).limit(QUERY_LIMIT).all()
+        results = [
+            {"timestamp": str(data.timestamp),
+             "pm_10": str(data.pm_10),
+             "pm_25": str(data.pm_25)
+             }
+            for data in particulates_data]
+        results = sort_list_of_dicts_by_timestamp(results)
+        return jsonify(results)
 
 
 @app.after_request

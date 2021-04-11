@@ -38,7 +38,7 @@ class Rainfall extends Component {
     }
 
     componentDidMount() {
-        fetch("http://217.160.29.142:5000/weather")
+        fetch("http://192.168.178.123:5000/weather")
             .then(res => res.json())
             .then(
                 (result) => {

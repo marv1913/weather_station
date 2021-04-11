@@ -15,7 +15,8 @@ class TemperatureLineGraph extends Component {
     }
 
     componentDidMount() {
-        fetch("http://217.160.29.142:5000/" + this.state.uri)
+        console.log(this.state.uri)
+        fetch("http://192.168.178.123:5000/" + this.state.uri)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -79,7 +80,7 @@ class TemperatureLineGraph extends Component {
                         text: this.state.data.current_value,
                         data: this.state.data.values,
                         labels: this.state.data.labels,
-                        label: "temperature in °C",
+                        label: this.state.line_description,
                         count: this.state.valueCount
                     })
                 )}
